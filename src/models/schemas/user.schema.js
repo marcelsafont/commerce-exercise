@@ -20,10 +20,10 @@ let userschema = new Schema({
   role: {
     type: String,
     enum: {
-        values: ['visitor', 'seller', 'admin'],
+        values: ['client', 'seller', 'admin'],
         message: 'value is not valid role'
     },
-    default: 'visitor',
+    default: 'client',
   },
   status: {
     type: Boolean,

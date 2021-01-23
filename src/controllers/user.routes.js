@@ -1,9 +1,10 @@
 const { config } = require('../config/config');
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
+const authToken = require('../middlewares/authtoken');
+const authAdmin = require('../middlewares/authadmin');
 const jwt = require('jsonwebtoken');
 const User = require('../models/schemas/user.schema');
-const UserModel = require('../models/user.model');
 const UserRouter = Router();
 
 //login user
@@ -30,7 +31,9 @@ UserRouter.post('/signup', (req, res) => {
     let user = new User({name, email,password: bcrypt.hashSync(req.body.password, salt), role });
 
     user.save((err, userDB) => {
-        if (err) res.status(400).json({ok: false,err})
+        if (err) {
+            return res.status(400).json({ok: false,err})
+        }
         const { name, email } = userDB;
         res.send({ok: true, user: {name, email }
         });
@@ -38,18 +41,29 @@ UserRouter.post('/signup', (req, res) => {
 })
 
 //get user by id
-UserRouter.get('/user/:id', (req, res) => {
+UserRouter.get('/user/:id', authToken ,(req, res) => {
     User.findById(req.params.id, (err, userDB) => {
-        if (err) res.status(400).json({ok: false, err})
-        res.send(userDB);
+        if (err){
+             return res.status(400).json({ok: false, message: 'user not exist',  err})
+        }
+        // TODO clean up fields returned to client
+        res.send({ok: true, user: userDB});
     })
 })
 
 //update user by id
-UserRouter.put('/user/:id', (req, res) => {
+UserRouter.put('/user/:id', authToken ,(req, res) => {
+    
+    
+    //TODO make sure only some fields can be udpate
+
+
     User.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true}, (err, userDB) => {
-        if(err) res.status(400).json({ ok:false, err})
-        res.send(userDB);
+        if(err) {
+            return res.status(400).json({ ok:false, err})
+        }
+        // TODO clean up fields returned to client
+        res.send({ ok:true, user: userDB});
     })
 });
 
@@ -69,7 +83,7 @@ UserRouter.get('/users', (req, res) => {
             if(err){
                 return res.status(400).json({ok:false, err})
             }
-
+            // TODO clean up fields returned to client
             User.count({}, (err, total)=> {
                 res.json({ok:true,total, users})
             });
@@ -78,9 +92,12 @@ UserRouter.get('/users', (req, res) => {
 })
 
 //delete user
-UserRouter.delete('/user/:id', (req, res) => {
+UserRouter.delete('/user/:id', [authToken, authAdmin],(req, res) => {
     User.findByIdAndUpdate(req.params.id, {status: false}, {new: true}, (err, userDB) => {
-        if(err) res.status(400).json({ ok:false, err})
+        if(err) {
+            return res.status(400).json({ ok:false, err})
+        }
+        // TODO clean up fields returned to client
         res.send(userDB);
     })
 })

@@ -1,11 +1,31 @@
+const { config } = require('../config/config');
 const  { Router } = require('express');
-//const ProductModel = require('../models/product.model.js');
+const jwt = require('jsonwebtoken');
 const Product = require('../models/schemas/product.schema');
+const authToken = require('../middlewares/authtoken');
+const authAdmin = require('../middlewares/authadmin');
 const ProductRouter = Router();
 
 ProductRouter.get('/products', (req, res) => {
-    // res.send(ProductModel.findAll());
-    res.send('hola');
+    let start = req.query.start || 0;
+    start = Number(start);
+
+    let end = req.query.end || 5;
+    end = Number(end);
+
+    Product.find({}, 'name price')
+        .skip(start)
+        .limit(end)
+        .exec( (err, products) => {
+            if(err){
+                return res.status(400).json({ok:false, err})
+            }
+
+            Product.countDocuments({}, (err, total)=> {
+                res.json({ok:true,total, products})
+            });
+            
+        })
    
 })
 
@@ -13,8 +33,7 @@ ProductRouter.get('/product/:id', (req, res) => {
     //res.send(ProductModel.findById(req.params.id));
 })
 
-ProductRouter.post('/add_product', (req, res) => {
-    //res.send(ProductModel.addProduct(req.body));
+ProductRouter.post('/add_product', [authToken, authAdmin], (req, res) => {
     let product = new Product({
         name: req.body.name, 
         price: req.body.price
