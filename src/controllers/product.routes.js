@@ -6,6 +6,7 @@ const authToken = require('../middlewares/authtoken');
 const authAdmin = require('../middlewares/authadmin');
 const ProductRouter = Router();
 
+//get all products
 ProductRouter.get('/products', (req, res) => {
     let start = req.query.start || 0;
     start = Number(start);
@@ -29,18 +30,38 @@ ProductRouter.get('/products', (req, res) => {
    
 })
 
+//update product by id only auth and admin
+ProductRouter.put('/product/:id', [authToken, authAdmin], (req, res) => {
+    res.send('update');
+})
+
+
+//get product by id
 ProductRouter.get('/product/:id', (req, res) => {
+    res.send('get')
     //res.send(ProductModel.findById(req.params.id));
 })
 
-ProductRouter.post('/add_product', [authToken, authAdmin], (req, res) => {
+
+//create new product only auth and admin
+ProductRouter.post('/product', [authToken, authAdmin], (req, res) => {
     let product = new Product({
         name: req.body.name, 
-        price: req.body.price
+        price: req.body.price,
+        description: req.body.description,
+        seller: req.user._id, 
+        categories: req.body.categories
     });
     
     product.save((err, productDB) => {
-        if (err) res.status(400).json({ok: false,err})
+        if (err) {
+            // server error
+            return res.status(500).json({ok: false, err})
+        }
+        if(!productDB){
+            // user error
+            return res.status(400).json({ok: false, err})
+        }
         res.send({
             ok: true,
             product: productDB

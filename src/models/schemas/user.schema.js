@@ -31,6 +31,15 @@ let userschema = new Schema({
   }
 });
 
+// exclude password on user object returned to client
+userschema.methods.toJSON = function(){
+  let user = this;
+  let userObject = user.toObject();
+  delete userObject.password;
+
+  return userObject;
+}
+
 userschema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userschema);

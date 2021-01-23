@@ -32,11 +32,14 @@ UserRouter.post('/signup', (req, res) => {
 
     user.save((err, userDB) => {
         if (err) {
+            //server error
+            return res.status(500).json({ok: false,err})
+        }
+        if(!userDB){
+            // client error
             return res.status(400).json({ok: false,err})
         }
-        const { name, email } = userDB;
-        res.send({ok: true, user: {name, email }
-        });
+        res.send({ok: true, user: userDB});
     });
 })
 
@@ -46,7 +49,6 @@ UserRouter.get('/user/:id', authToken ,(req, res) => {
         if (err){
              return res.status(400).json({ok: false, message: 'user not exist',  err})
         }
-        // TODO clean up fields returned to client
         res.send({ok: true, user: userDB});
     })
 })
@@ -62,7 +64,6 @@ UserRouter.put('/user/:id', authToken ,(req, res) => {
         if(err) {
             return res.status(400).json({ ok:false, err})
         }
-        // TODO clean up fields returned to client
         res.send({ ok:true, user: userDB});
     })
 });
@@ -83,7 +84,6 @@ UserRouter.get('/users', (req, res) => {
             if(err){
                 return res.status(400).json({ok:false, err})
             }
-            // TODO clean up fields returned to client
             User.count({}, (err, total)=> {
                 res.json({ok:true,total, users})
             });
@@ -97,7 +97,6 @@ UserRouter.delete('/user/:id', [authToken, authAdmin],(req, res) => {
         if(err) {
             return res.status(400).json({ ok:false, err})
         }
-        // TODO clean up fields returned to client
         res.send(userDB);
     })
 })

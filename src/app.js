@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(require('./controllers/product.routes'));
 app.use(require('./controllers/user.routes'));
+app.use(require('./controllers/category.routes'));
+app.use(require('./controllers/order.routes'));
 
 app.listen(config.port, () => {
     console.log(`server listening on port ${config.port}`);
