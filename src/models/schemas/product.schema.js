@@ -11,6 +11,11 @@ let productSchema = new Schema({
       type: String,
       required: true,
     },
+    available: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
     description: {
       type: String,
       required: true
