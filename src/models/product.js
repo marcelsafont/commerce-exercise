@@ -11,6 +11,7 @@ const getAllProduct = (req, res) => {
     Product.find({available: true}, 'name price description')
         .skip(start)
         .limit(end)
+        .populate('seller', 'name')
         .exec( (err, products) => {
             if(err){
                 return res.status(400).json({ok:false, err})
@@ -24,13 +25,15 @@ const getAllProduct = (req, res) => {
 }
 
 const searchProduct = (req,res) => {
-    let maxPrice = req.query.max || '';
+    let maxPrice = req.query.max || null;
     let minPrice = req.query.min || '';
     let productName = req.query.name || '';
 
-    //let regexName = new RegExp(productName, 'i');
+    let regexName = new RegExp(productName, 'i');
 
-    Product.find({available: true, price: { $lt: maxPrice, $gt: minPrice}, name: productName}, 'name price description')
+    // Product.find({$and: [{available: true}, {price: { $lt: maxPrice}}, {price: {$gt: minPrice}}]}, 'name price description')
+    Product.find({ available: true, name: regexName, price: maxPrice}, 'name price description')
+        .populate('seller', 'name')
         .exec((err, products) => {
             res.send(products);
         });
