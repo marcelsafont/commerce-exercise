@@ -90,4 +90,6 @@ ProductRouter.post('/product', [authToken, authAdminorSeller], createNewProduct)
 //delete product only auth admin or seller
 ProductRouter.delete('/product/:id', [authToken, authAdminorSeller], deleteProduct)
 
+ProductRouter.get('/products/seller/:id' );
+
 module.exports = ProductRouter;
