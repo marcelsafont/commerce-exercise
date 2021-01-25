@@ -34,12 +34,10 @@ const addOrder = (req, res) => {
 
     order.save((err, orderDB) => {
         if (err) {
-            // server error
             return res.status(500).json({ ok: false, err })
         }
 
         if (!orderDB) {
-            // client error
             return res.status(400).json({ ok: false, err })
         }
         res.send({
@@ -55,7 +53,6 @@ const getOrderById = (req, res) => {
         if (err) {
             return res.status(400).json({ ok: false, err })
         }
-
         res.json({ ok: true, order: orderDB })
 
     });
@@ -65,9 +62,8 @@ const getOrderById = (req, res) => {
 const updateOrder = (req, res) => {
     Order.findById(req.params.id, req.body, { new: true, runValidators: true }, (err, orderDB) => {
         if (err) {
-            return res.status(400).json({ ok: false, err })
+            return res.status(500).json({ ok: false, err })
         }
-        // TODO clean up fields returned to client
         res.send({ ok: true, user: orderDB });
     })
 }

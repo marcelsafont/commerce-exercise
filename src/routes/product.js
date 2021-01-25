@@ -16,7 +16,7 @@ const ProductRouter = Router();
  *       - application/json
  *     responses:
  *       200:
- *         description: Success
+ *         description: return all products
  */ 
 
 //get all products
@@ -28,6 +28,19 @@ ProductRouter.get('/products', getAllProduct)
  *   get:
  *     tags: [Products]
  *     description: Allow search on products
+ *     parameters:
+ *       - name: name
+ *         in: query
+ *         type: string
+ *         required: false
+ *       - name: maxPrice
+ *         in: query
+ *         type: string
+ *         required: false
+ *       - name: minPrice  
+ *         in: query
+ *         type: string
+ *         required: false
  *     responses:
  *       200:
  *         description: Success
@@ -42,11 +55,17 @@ ProductRouter.get('/products/search', searchProduct)
  *   put:
  *     tags: [Products]
  *     description: Update product by id
+ *     parameters:
+ *       - name: productId
+ *         in: path
+ *         type: string
+ *         required: true
+ *       -   
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return all products filtered
  */ 
 
 //update product by id only auth and admin
@@ -58,9 +77,14 @@ ProductRouter.put('/product/:id', [authToken, authAdminorSeller], updateProduct)
  *   get:
  *     tags: [Products]
  *     description: Get product by id
+ *     parameters:
+ *       - name: productId
+ *         in: path
+ *         type: string
+ *         required: true
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return one product by id
  */ 
 
 //get product by id
@@ -72,6 +96,11 @@ ProductRouter.get('/product/:id', getProductById)
  *   post:
  *     tags: [Products]
  *     description: Create a new product
+ *     parameters:
+ *       - name: productId
+ *         in: path
+ *         type: string
+ *         required: true
  *     responses:
  *       200:
  *         description: Success

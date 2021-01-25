@@ -48,10 +48,12 @@ const getUserById = (req, res) => {
 }
 
 const updateUserById = (req, res) => {
-    //TODO make sure only some fields can be udpate
-    User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }, (err, userDB) => {
+    
+    const filterOutPassword = Object.entries(req.body).filter(item =>{ return item[0] != 'password'});
+
+    User.findByIdAndUpdate(req.params.id, Object.fromEntries(filterOutPassword), { new: true, runValidators: true }, (err, userDB) => {
         if (err) {
-            return res.status(400).json({ ok: false, err })
+            return res.status(400).json({ ok: false, message: 'User not exist', err })
         }
         res.send({ ok: true, user: userDB });
     })
@@ -82,7 +84,7 @@ const getAllUsers = (req, res) => {
 const deleteUser = (req, res) => {
     User.findByIdAndUpdate(req.params.id, { status: false }, { new: true }, (err, userDB) => {
         if (err) {
-            return res.status(400).json({ ok: false, err })
+            return res.status(400).json({ ok: false, message: 'User not exist', err })
         }
         res.send(userDB);
     })

@@ -12,6 +12,8 @@ const OrderRouter = Router();
  *   get:
  *     tags: [Orders]
  *     description: Get all orders
+ *     produces:
+ *       - application/json
  *     responses:
  *       200:
  *         description: Success

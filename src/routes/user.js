@@ -74,6 +74,12 @@ UserRouter.post('/signup', signUp)
  *     parameters:
  *       - in: path
  *         name: userId
+ *         required: true
+ *         type: string
+ *       - name: token
+ *         in: header
+ *         type: string
+ *         required: true
  *     responses:
  *       200:
  *         description: Success
@@ -88,13 +94,18 @@ UserRouter.get('/user/:id', authToken, getUserById)
  *   get:
  *     tags: [Users]
  *     description: Get all users
+ *     parameters:
+ *       - name: token
+ *         in: header
+ *         type: string
+ *         required: true
  *     responses:
  *       200:
  *         description: Success
  */
 
 //get all users with pagination
-UserRouter.get('/users', getAllUsers)
+UserRouter.get('/users', [authToken, authAdmin],getAllUsers)
 
 /**
  * @swagger
@@ -102,6 +113,23 @@ UserRouter.get('/users', getAllUsers)
  *   put:
  *     tags: [Users]
  *     description: Update user by id
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         type: string
+ *       - name: token
+ *         in: header
+ *         type: string
+ *         required: true
+ *       - name: name
+ *         required: true
+ *         in: formData
+ *         type: string
+ *       - name: email
+ *         required: true
+ *         in: formData
+ *         type: string
  *     responses:
  *       200:
  *         description: Success
@@ -116,6 +144,15 @@ UserRouter.put('/user/:id', authToken, updateUserById);
  *   delete:
  *     tags: [Users]
  *     description: Delete user by id
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         type: string
+ *       - name: token
+ *         in: header
+ *         type: string
+ *         required: true
  *     responses:
  *       200:
  *         description: Success
