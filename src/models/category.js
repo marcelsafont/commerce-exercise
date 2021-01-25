@@ -7,13 +7,13 @@ const createCategory = (req, res) => {
     category.save((err, categoryDB) => {
         if (err) {
             //server error
-            return res.status(500).json({ok: false,err})
+            return res.status(500).json({ ok: false, err })
         }
-        if(!categoryDB){
+        if (!categoryDB) {
             // client error
-            return res.status(400).json({ok: false,err})
+            return res.status(400).json({ ok: false, err })
         }
-        res.send({ok: true, category: categoryDB});
+        res.send({ ok: true, category: categoryDB });
     });
 }
 
