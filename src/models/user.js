@@ -76,7 +76,7 @@ const getAllUsers = (req, res) => {
             if(err){
                 return res.status(400).json({ok:false, err})
             }
-            User.count({}, (err, total)=> {
+            User.countDocuments({}, (err, total)=> {
                 res.json({ok:true,total, users})
             });
             
