@@ -1,26 +1,12 @@
 const config = require('./config/config').config;
 const express = require('express');
 const bodyParser = require('body-parser');
+const { swaggerUI, swaggerDocs } = require('./swaggerconfig');
 require('./database');
 
-const swaggerUI = require('swagger-ui-express');
-const swaggerJsDoc = require('swagger-jsdoc');
-
 const app = express();
+
 app.use(bodyParser.urlencoded({extended: true}));
-
-const swaggerOptions = {
-    swaggerDefinition: {
-        info:{
-            title:'API commerce express',
-            version: '1.0.0'
-        }
-    },
-    apis: [__dirname + '/routes/*.js'],
-};
-
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.use(require('./routes/product'));

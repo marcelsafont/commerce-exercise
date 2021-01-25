@@ -5,19 +5,6 @@ const { loginUser, signUp, getUserById, updateUserById, getAllUsers, deleteUser 
 
 const UserRouter = Router();
 
-/**
-* @swagger
-* tags:
-*   name: Users
-*   description: User management and login
-*/
-
-/**
-* @swagger
-* tags:
-*   name: Products
-*   description: Products management
-*/
 
 /**
  * @swagger
@@ -53,6 +40,7 @@ UserRouter.post('/signup', signUp)
  * @swagger
  * /user/:id:
  *   get:
+ *     tags: [Users]
  *     description: Get user by id
  *     responses:
  *       200:
@@ -66,6 +54,7 @@ UserRouter.get('/user/:id', authToken, getUserById)
  * @swagger
  * /users:
  *   get:
+ *     tags: [Users]
  *     description: Get all users
  *     responses:
  *       200:
@@ -79,6 +68,7 @@ UserRouter.get('/users', getAllUsers)
  * @swagger
  * /user/:id:
  *   put:
+ *     tags: [Users]
  *     description: Update user by id
  *     responses:
  *       200:
@@ -92,6 +82,7 @@ UserRouter.put('/user/:id', authToken, updateUserById);
  * @swagger
  * /user/:id:
  *   delete:
+ *     tags: [Users]
  *     description: Delete user by id
  *     responses:
  *       200:
