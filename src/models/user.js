@@ -1,15 +1,11 @@
 const { config } = require('../config/config');
-const { Router } = require('express');
+const User = require('./schemas/user.schema');
 const bcrypt = require('bcrypt');
-const authToken = require('../middlewares/authtoken');
-const authAdmin = require('../middlewares/authadmin');
 const jwt = require('jsonwebtoken');
-const User = require('../models/schemas/user.schema');
-const UserRouter = Router();
 
-//login user
-UserRouter.post('/login', (req, res) => {
-    //res.send('hola');
+
+
+const loginUser = (req, res) => {
     User.findOne({email: req.body.email }, (err, userDB) => {
         if(err) res.status(500).json({ok: false, message: 'server error'})
         if(!userDB){
@@ -22,10 +18,9 @@ UserRouter.post('/login', (req, res) => {
         const { name, email } = userDB;
         res.send({ok: true, user: {name, email}, token});
     })
-})
+}
 
-//signup user
-UserRouter.post('/signup', (req, res) => {
+const signUp = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     let { name, email, role} = req.body;
     let user = new User({name, email,password: bcrypt.hashSync(req.body.password, salt), role });
@@ -41,20 +36,18 @@ UserRouter.post('/signup', (req, res) => {
         }
         res.send({ok: true, user: userDB});
     });
-})
+}
 
-//get user by id
-UserRouter.get('/user/:id', authToken ,(req, res) => {
+const getUserById =  (req, res) => {
     User.findById(req.params.id, (err, userDB) => {
         if (err){
              return res.status(400).json({ok: false, message: 'user not exist',  err})
         }
         res.send({ok: true, user: userDB});
     })
-})
+}
 
-//update user by id
-UserRouter.put('/user/:id', authToken ,(req, res) => {
+const updateUserById = (req, res) => {
     
     
     //TODO make sure only some fields can be udpate
@@ -66,10 +59,9 @@ UserRouter.put('/user/:id', authToken ,(req, res) => {
         }
         res.send({ ok:true, user: userDB});
     })
-});
+}
 
-//get all users with pagination
-UserRouter.get('/users', (req, res) => {
+const getAllUsers = (req, res) => {
 
     let start = req.query.start || 0;
     start = Number(start);
@@ -89,17 +81,16 @@ UserRouter.get('/users', (req, res) => {
             });
             
         })
-})
+}
 
-//delete user
-UserRouter.delete('/user/:id', [authToken, authAdmin],(req, res) => {
+const deleteUser = (req, res) => {
     User.findByIdAndUpdate(req.params.id, {status: false}, {new: true}, (err, userDB) => {
         if(err) {
             return res.status(400).json({ ok:false, err})
         }
         res.send(userDB);
     })
-})
+}
 
 
-module.exports = UserRouter;
+module.exports = { loginUser, signUp, getUserById, updateUserById, getAllUsers, deleteUser }

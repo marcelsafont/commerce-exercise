@@ -1,13 +1,6 @@
-const { config } = require('../config/config');
-const  { Router } = require('express');
-const jwt = require('jsonwebtoken');
 const Product = require('../models/schemas/product.schema');
-const authToken = require('../middlewares/authtoken');
-const authAdmin = require('../middlewares/authadmin');
-const ProductRouter = Router();
 
-//get all products
-ProductRouter.get('/products', (req, res) => {
+const getAllProduct = (req, res) => {
     let start = req.query.start || 0;
     start = Number(start);
 
@@ -26,25 +19,10 @@ ProductRouter.get('/products', (req, res) => {
                 res.json({ok:true,total, products})
             });
             
-        })
-   
-})
+        }) 
+}
 
-//update product by id only auth and admin
-ProductRouter.put('/product/:id', [authToken, authAdmin], (req, res) => {
-    res.send('update');
-})
-
-
-//get product by id
-ProductRouter.get('/product/:id', (req, res) => {
-    res.send('get')
-    //res.send(ProductModel.findById(req.params.id));
-})
-
-
-//create new product only auth and admin
-ProductRouter.post('/product', [authToken, authAdmin], (req, res) => {
+const createNewProduct = (req, res) => {
     let product = new Product({
         name: req.body.name, 
         price: req.body.price,
@@ -67,6 +45,15 @@ ProductRouter.post('/product', [authToken, authAdmin], (req, res) => {
             product: productDB
         });
     });
-})
+}
 
-module.exports = ProductRouter;
+const getProductById = (req, res) => {
+    res.send('get')
+    //res.send(ProductModel.findById(req.params.id));
+}
+
+const updateProduct =  (req, res) => {
+    res.send('update');
+}
+
+module.exports = { getAllProduct, createNewProduct, getProductById, updateProduct }
