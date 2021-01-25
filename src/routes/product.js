@@ -63,7 +63,7 @@ ProductRouter.get('/products/search', searchProduct)
  * /product/:id:
  *   put:
  *     tags: [Products]
- *     description: Update product by id
+ *     description: Update product by id (only admin or seller roles)
  *     parameters:
  *       - name: productId
  *         in: path
@@ -72,7 +72,8 @@ ProductRouter.get('/products/search', searchProduct)
  *       - name: name
  *         in: formData
  *         type: string
- *         required: true  
+ *         required: true
+ *       - 
  *     produces:
  *       - application/json
  *     responses:
@@ -80,7 +81,6 @@ ProductRouter.get('/products/search', searchProduct)
  *         description: Update product by id
  */ 
 
-//update product by id only auth and admin
 ProductRouter.put('/product/:id', [authToken, authAdminorSeller], updateProduct)
 
 /**
@@ -99,7 +99,6 @@ ProductRouter.put('/product/:id', [authToken, authAdminorSeller], updateProduct)
  *         description: Return one product by id
  */ 
 
-//get product by id
 ProductRouter.get('/product/:id', getProductById)
 
 /**
@@ -138,13 +137,17 @@ ProductRouter.post('/product', [authToken, authAdminorSeller], createNewProduct)
  * /product/:id:
  *   delete:
  *     tags: [Products]
- *     description: Delete a product by id
+ *     description: Delete a product by id (only admin or seller)
+ *     parameters:
+ *       - name: productId
+ *         in: path
+ *         type: string
+ *         required: true
  *     responses:
  *       200:
  *         description: Success
  */ 
 
-//delete product only auth admin or seller
 ProductRouter.delete('/product/:id', [authToken, authAdminorSeller], deleteProduct)
 
 /**

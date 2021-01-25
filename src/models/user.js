@@ -49,9 +49,9 @@ const getUserById = (req, res) => {
 
 const updateUserById = (req, res) => {
     
-    const filterOutPassword = Object.entries(req.body).filter(item =>{ return item[0] != 'password'});
+    const filterOutFields = Object.entries(req.body).filter(item =>{ return item[0] != 'password' && item[0] != 'role' });
 
-    User.findByIdAndUpdate(req.params.id, Object.fromEntries(filterOutPassword), { new: true, runValidators: true }, (err, userDB) => {
+    User.findByIdAndUpdate(req.params.id, Object.fromEntries(filterOutFields), { new: true, runValidators: true }, (err, userDB) => {
         if (err) {
             return res.status(400).json({ ok: false, message: 'User not exist', err })
         }

@@ -19,4 +19,6 @@ Todos los endpoints estan documentados en /api-docs dentro de la aplicación
 
 Ningún metodo delete elimina físicamente el registro de la base de datos. Los productos tiene un campo booleano 'available' y los usuarios un campo 'status', donde se marca como true o false si esta activo o no. 
 
+El sitio contempla 3 roles para los usuarios: 'client', 'seller', 'admin'. 
 
+Los usuarios por defecto son asignados como 'client' 
