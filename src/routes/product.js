@@ -12,6 +12,15 @@ const ProductRouter = Router();
  *   get:
  *     tags: [Products]
  *     description: Get all products
+ *     parameters:
+ *       - name: start
+ *         in: query
+ *         type: number
+ *         required: false
+ *       - name: end
+ *         in: query
+ *         type: number
+ *         required: false
  *     produces:
  *       - application/json
  *     responses:
@@ -43,7 +52,7 @@ ProductRouter.get('/products', getAllProduct)
  *         required: false
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return all products with filter
  */ 
 
 //search products
@@ -60,12 +69,15 @@ ProductRouter.get('/products/search', searchProduct)
  *         in: path
  *         type: string
  *         required: true
- *       -   
+ *       - name: name
+ *         in: formData
+ *         type: string
+ *         required: true  
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Return all products filtered
+ *         description: Update product by id
  */ 
 
 //update product by id only auth and admin
@@ -92,15 +104,27 @@ ProductRouter.get('/product/:id', getProductById)
 
 /**
  * @swagger
- * /product/:id:
+ * /product:
  *   post:
  *     tags: [Products]
  *     description: Create a new product
  *     parameters:
- *       - name: productId
- *         in: path
+ *       - name: name
  *         type: string
  *         required: true
+ *         in: formData 
+ *       - name: price
+ *         type: string
+ *         required: true
+ *         in: formData
+ *       - name: description
+ *         type: string
+ *         required: false
+ *         in: formData
+ *       - name: categories
+ *         type: objectId
+ *         required: false
+ *         in: formData    
  *     responses:
  *       200:
  *         description: Success
@@ -126,7 +150,7 @@ ProductRouter.delete('/product/:id', [authToken, authAdminorSeller], deleteProdu
 /**
  * @swagger
  * /products/seller/:id:
- *   delete:
+ *   get:
  *     tags: [Products]
  *     description: Get products by seller id
  *     responses:

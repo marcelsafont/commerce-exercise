@@ -28,9 +28,14 @@ OrderRouter.get('/orders', [authToken, authAdmin], getAllOrders);
  *   get:
  *     tags: [Orders]
  *     description: Get order by id
+ *     parameters:
+ *       - name: orderId
+ *         type: string
+ *         required: true
+ *         in: path
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return order by id
  */ 
 
 //get orders by id
@@ -42,6 +47,15 @@ OrderRouter.get('/order/:id', [authToken, authAdminorSeller], getOrderById)
  *   post:
  *     tags: [Orders]
  *     description: Create new order
+ *     parameters:
+ *       - name: name
+ *         type: string
+ *         required: true
+ *         in: formData 
+ *       - name: price
+ *         type: string
+ *         required: true
+ *         in: formData    
  *     responses:
  *       200:
  *         description: Success

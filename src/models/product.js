@@ -79,11 +79,9 @@ const createNewProduct = (req, res) => {
 
     product.save((err, productDB) => {
         if (err) {
-            // server error
             return res.status(500).json({ ok: false, err })
         }
         if (!productDB) {
-            // user error
             return res.status(400).json({ ok: false, err })
         }
         res.send({
