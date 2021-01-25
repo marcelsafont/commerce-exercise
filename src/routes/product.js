@@ -1,5 +1,5 @@
 const  { Router } = require('express');
-const {getAllProduct, createNewProduct, getProductById, updateProduct, searchProduct, deleteProduct } = require('../models/product');
+const {getAllProduct, createNewProduct, getProductById, updateProduct, searchProduct, deleteProduct, ownProducts } = require('../models/product');
 const authToken = require('../middlewares/authtoken');
 const authAdmin = require('../middlewares/authadmin');
 const authAdminorSeller = require('../middlewares/authadminorseller');
@@ -12,6 +12,8 @@ const ProductRouter = Router();
  *   get:
  *     tags: [Products]
  *     description: Get all products
+ *     produces:
+ *       - application/json
  *     responses:
  *       200:
  *         description: Success
@@ -40,6 +42,8 @@ ProductRouter.get('/products/search', searchProduct)
  *   put:
  *     tags: [Products]
  *     description: Update product by id
+ *     produces:
+ *       - application/json
  *     responses:
  *       200:
  *         description: Success
@@ -90,6 +94,17 @@ ProductRouter.post('/product', [authToken, authAdminorSeller], createNewProduct)
 //delete product only auth admin or seller
 ProductRouter.delete('/product/:id', [authToken, authAdminorSeller], deleteProduct)
 
-ProductRouter.get('/products/seller/:id' );
+/**
+ * @swagger
+ * /products/seller/:id:
+ *   delete:
+ *     tags: [Products]
+ *     description: Get products by seller id
+ *     responses:
+ *       200:
+ *         description: Success
+ */ 
+
+ProductRouter.get('/products/seller/:id', [authToken, authAdminorSeller], ownProducts );
 
 module.exports = ProductRouter;

@@ -1,0 +1,2 @@
+{"_id":{"$oid":"600c4dd47912dc545811e46e"},"role":"admin","status":true,"name":"marcel","email":"marcel@test.com","password":"$2b$10$umeHV3OSq9phSJKCH2s9zelxBErDdXea8uQugeTI2LW.jFT.pnD2W","__v":0}
+{"_id":{"$oid":"600d38221f30cb62c87d404e"},"role":"admin","status":true,"name":"marcel","email":"marcel2@test.com","password":"$2b$10$pmMxfoHgDO.KoNgeiaFNqe6PLDxzezDDqIxQhXJr9.JaQc639wmGC","__v":0}

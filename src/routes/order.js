@@ -1,6 +1,7 @@
 const  { Router } = require('express');
 const authToken = require('../middlewares/authtoken');
 const authAdmin = require('../middlewares/authadmin');
+const authAdminorSeller = require('../middlewares/authadminorseller');
 const { getAllOrders, addOrder, getOrderById, updateOrder, getOrdersByUserId } = require('../models/order');
 const OrderRouter = Router();
 
@@ -31,7 +32,7 @@ OrderRouter.get('/orders', [authToken, authAdmin], getAllOrders);
  */ 
 
 //get orders by id
-OrderRouter.get('/order/:id', [authToken, authAdmin], getOrderById)
+OrderRouter.get('/order/:id', [authToken, authAdminorSeller], getOrderById)
 
 /**
  * @swagger
@@ -59,7 +60,7 @@ OrderRouter.post('/order', authToken, addOrder)
  */ 
 
 //update order
-OrderRouter.put('/order/:id',[authToken, authAdmin], updateOrder)
+OrderRouter.put('/order/:id',[authToken, authAdminorSeller], updateOrder)
 
 /**
  * @swagger

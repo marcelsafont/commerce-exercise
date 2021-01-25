@@ -12,6 +12,18 @@ const UserRouter = Router();
  *   post:
  *     tags: [Users]
  *     description: Login user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: email
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: password
+ *         in: formData
+ *         required: true
+ *         type: string     
+ *          
  *     responses:
  *       200:
  *         description: Success
@@ -28,6 +40,21 @@ UserRouter.post('/login', loginUser);
  *   post:
  *     tags: [Users]
  *     description: Signup user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: name
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: email
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: password
+ *         in: formData
+ *         required: true
+ *         type: string
  *     responses:
  *       200:
  *         description: Success
@@ -42,6 +69,11 @@ UserRouter.post('/signup', signUp)
  *   get:
  *     tags: [Users]
  *     description: Get user by id
+ *     produces:
+ *       - appliciation/json
+ *     parameters:
+ *       - in: path
+ *         name: userId
  *     responses:
  *       200:
  *         description: Success

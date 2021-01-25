@@ -99,4 +99,20 @@ const deleteProduct = (req, res) => {
     })
 }
 
-module.exports = { getAllProduct, createNewProduct, getProductById, updateProduct, searchProduct, deleteProduct }
+const ownProducts = (req, res) => {
+    Product.find({seller: req.params.id}, 'name price description', (err, productsDB) => {
+        if(err){
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        }
+
+        res.send({
+            ok:true,
+            products: productsDB
+        })
+    })
+}
+
+module.exports = { getAllProduct, createNewProduct, getProductById, updateProduct, searchProduct, deleteProduct, ownProducts }
