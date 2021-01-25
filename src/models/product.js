@@ -7,6 +7,7 @@ const getAllProduct = (req, res) => {
     let end = req.query.end || 5;
     end = Number(end);
 
+
     Product.find({available: true}, 'name price description')
         .skip(start)
         .limit(end)
@@ -20,6 +21,19 @@ const getAllProduct = (req, res) => {
             });
             
         }) 
+}
+
+const searchProduct = (req,res) => {
+    let maxPrice = req.query.max || '';
+    let minPrice = req.query.min || '';
+    let productName = req.query.name || '';
+
+    //let regexName = new RegExp(productName, 'i');
+
+    Product.find({available: true, price: { $lt: maxPrice, $gt: minPrice}, name: productName}, 'name price description')
+        .exec((err, products) => {
+            res.send(products);
+        });
 }
 
 const createNewProduct = (req, res) => {
@@ -48,12 +62,23 @@ const createNewProduct = (req, res) => {
 }
 
 const getProductById = (req, res) => {
-    res.send('get')
     //res.send(ProductModel.findById(req.params.id));
+    Product.findById(req.params.id, (err, productDB) => {
+        if (err){
+             return res.status(400).json({ok: false, message: 'product not exist',  err})
+        }
+        res.send({ok: true, product: productDB});
+    })
 }
 
 const updateProduct =  (req, res) => {
-    res.send('update');
+    //TODO make sure only some fields can be udpate
+    Product.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true}, (err, productDB) => {
+        if(err) {
+            return res.status(400).json({ ok:false, err})
+        }
+        res.send({ ok:true, user: productDB});
+    })
 }
 
-module.exports = { getAllProduct, createNewProduct, getProductById, updateProduct }
+module.exports = { getAllProduct, createNewProduct, getProductById, updateProduct, searchProduct }
