@@ -7,7 +7,7 @@ const getAllProduct = (req, res) => {
     let end = req.query.end || 5;
     end = Number(end);
 
-    Product.find({}, 'name price')
+    Product.find({available: true}, 'name price description')
         .skip(start)
         .limit(end)
         .exec( (err, products) => {
@@ -15,7 +15,7 @@ const getAllProduct = (req, res) => {
                 return res.status(400).json({ok:false, err})
             }
 
-            Product.countDocuments({}, (err, total)=> {
+            Product.countDocuments({available: true}, (err, total)=> {
                 res.json({ok:true,total, products})
             });
             
