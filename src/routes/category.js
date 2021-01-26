@@ -10,10 +10,14 @@ const CategoryRouter = Router();
  * /category:
  *   post:
  *     tags: [Category]
- *     description: Create new category
+ *     description: Create new category (only admin)
  *     produces:
  *       - application/json
  *     parameters:
+ *       - name: token
+ *         in: header
+ *         type: string
+ *         required: true
  *       - name: name
  *         required: true
  *         in: formData

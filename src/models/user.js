@@ -49,7 +49,7 @@ const getUserById = (req, res) => {
 
 const updateUserById = (req, res) => {
     
-    const filterOutFields = Object.entries(req.body).filter(item =>{ return item[0] != 'password' && item[0] != 'role' });
+    const filterOutFields = Object.entries(req.body).filter(item =>{ return item[0] != 'password' });
 
     User.findByIdAndUpdate(req.params.id, Object.fromEntries(filterOutFields), { new: true, runValidators: true }, (err, userDB) => {
         if (err) {

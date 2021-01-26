@@ -27,6 +27,20 @@ In the root folder of the project there is a folder called `data`. Inside that f
 
     mongoimport --db=YOUR_DATABASE_NAME --collection=users --file=users.json
 
+There are 3 users created: 
+- client: 
+    - email: client@test.com 
+    - name: client
+    - password: client
+- admin:
+    - email: admin@test.com
+    - name: admin
+    - password: admin
+- seller:
+    - email: seller@test.com
+    - name: seller
+    - password: seller
+
 ## Docker installation  
 
 Will be available in next release
@@ -39,7 +53,10 @@ All endpoints are documented using swagger and they are located in `/api-docs`
 
 Open endpoints require no Authentication.
 * login: `POST /login`
+* singup: `POST /signup`
 * products: `GET /products`
+* products search: `GET /products/search`
+* product info: `GET /product/:id`
 
 
 ### Endpoints that require Authentication
@@ -50,8 +67,17 @@ Closed endpoints require a valid Token to be included in the header of the reque
 
 ### Current user related 
 
-
 Each endpoint manipulates or displays information related to the User whose Token is provided with the request
+
+* User orders: `GET /orders/user`
+
+### Account related
+
+Endpoints for viewing and manipulating the Accounts that the Authenticated User has permissions to access.
+
+* User info (only admin): `GET /user/:id`
+* All users (only admin): `GET /users`
+* Delete user (only admin): `DELETE /user/:id`
 
 ### Considerations
 
@@ -59,4 +85,4 @@ Any delete method will remove content from the database. We are using booleans f
 
 This site has 3 user roles: `client, seller, admin`. 
 
-Users by default are assigned to `client`. 
+Users by default are assigned to `client`. In order to change role client must use update endpoint. 

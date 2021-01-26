@@ -60,7 +60,7 @@ ProductRouter.get('/products/search', searchProduct)
 
 /**
  * @swagger
- * /product/:id:
+ * /product/{productId}:
  *   put:
  *     tags: [Products]
  *     description: Update product by id (only admin or seller roles)
@@ -73,19 +73,38 @@ ProductRouter.get('/products/search', searchProduct)
  *         in: formData
  *         type: string
  *         required: true
- *       - 
+ *       - name: available
+ *         type: boolean
+ *         in: formData
+ *         required: false
+ *       - name: price
+ *         type: number
+ *         in: formData
+ *         required: true
+ *       - name: description
+ *         type: string
+ *         in: formData
+ *         required: false
+ *       - name: seller
+ *         type: objectId
+ *         in: formData
+ *         required: true
+ *       - name: categories
+ *         type: objectId
+ *         in: formData
+ *         required: false
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Update product by id
+ *         description: Return update product object
  */ 
 
 ProductRouter.put('/product/:id', [authToken, authAdminorSeller], updateProduct)
 
 /**
  * @swagger
- * /product/:id:
+ * /product/{productId}:
  *   get:
  *     tags: [Products]
  *     description: Get product by id
@@ -126,7 +145,7 @@ ProductRouter.get('/product/:id', getProductById)
  *         in: formData    
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return new order object
  */ 
 
 //create new product only auth admin or seller
@@ -134,7 +153,7 @@ ProductRouter.post('/product', [authToken, authAdminorSeller], createNewProduct)
 
 /**
  * @swagger
- * /product/:id:
+ * /product/{productId}:
  *   delete:
  *     tags: [Products]
  *     description: Delete a product by id (only admin or seller)
@@ -145,20 +164,25 @@ ProductRouter.post('/product', [authToken, authAdminorSeller], createNewProduct)
  *         required: true
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return updated order object
  */ 
 
 ProductRouter.delete('/product/:id', [authToken, authAdminorSeller], deleteProduct)
 
 /**
  * @swagger
- * /products/seller/:id:
+ * /products/seller/{userId}:
  *   get:
  *     tags: [Products]
- *     description: Get products by seller id
+ *     description: Get products by seller id (only admin or seller)
+ *     parameters:
+ *       - name: userId
+ *         type: objectId
+ *         in: path
+ *         required: true     
  *     responses:
  *       200:
- *         description: Success
+ *         description: Return orders that belong to specific seller id
  */ 
 
 ProductRouter.get('/products/seller/:id', [authToken, authAdminorSeller], ownProducts );

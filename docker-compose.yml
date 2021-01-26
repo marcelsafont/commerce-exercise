@@ -1,21 +1,3 @@
-version: "3"
-services:
-  server: 
-    container_name: server
-    restart: always
-    build: .
-    ports: 
-      - "3000:3000"
-    links:
-      - database
-    volumes:
-      - .:/usr/src/app
-  database:
-    container_name: mongodb
-    image: mongo
-    ports: 
-      - "27018:21017"
-    logging:
-      driver: none
+
 
     

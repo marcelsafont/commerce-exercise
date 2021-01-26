@@ -65,7 +65,7 @@ UserRouter.post('/signup', signUp)
 
 /**
  * @swagger
- * /user/:id:
+ * /user/{userId}:
  *   get:
  *     tags: [Users]
  *     description: Get user by id
@@ -109,7 +109,7 @@ UserRouter.get('/users', [authToken, authAdmin],getAllUsers)
 
 /**
  * @swagger
- * /user/:id:
+ * /user/{userId}:
  *   put:
  *     tags: [Users]
  *     description: Update user by id
@@ -130,6 +130,10 @@ UserRouter.get('/users', [authToken, authAdmin],getAllUsers)
  *         required: true
  *         in: formData
  *         type: string
+ *       - name: role
+ *         required: false
+ *         in: formData
+ *         type: string
  *     responses:
  *       200:
  *         description: Success
@@ -140,7 +144,7 @@ UserRouter.put('/user/:id', authToken, updateUserById);
 
 /**
  * @swagger
- * /user/:id:
+ * /user/{userId}:
  *   delete:
  *     tags: [Users]
  *     description: Delete user by id
