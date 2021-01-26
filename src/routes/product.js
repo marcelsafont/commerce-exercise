@@ -8,7 +8,7 @@ const ProductRouter = Router();
 
 /**
  * @swagger
- * /products:
+ * /products?start=start&limit=limit:
  *   get:
  *     tags: [Products]
  *     description: Get all products
@@ -17,7 +17,7 @@ const ProductRouter = Router();
  *         in: query
  *         type: number
  *         required: false
- *       - name: end
+ *       - name: limit
  *         in: query
  *         type: number
  *         required: false

@@ -26,7 +26,10 @@ User must have mongo running in the machine.
 In the root folder of the project there is a folder called `data`. Inside that folder there are dummy content exports jsons that can be imported.
 
     mongoimport --db=YOUR_DATABASE_NAME --collection=users --file=users.json
-
+    mongoimport --db=YOUR_DATABASE_NAME --collection=categories --file=categories.json
+    mongoimport --db=YOUR_DATABASE_NAME --collection=orders --file=orders.json
+    mongoimport --db=YOUR_DATABASE_NAME --collection=products --file=products.json
+    
 There are 3 users created: 
 - client: 
     - email: client@test.com 
@@ -43,7 +46,7 @@ There are 3 users created:
 
 ## Docker installation  
 
-Will be available in next release
+Will be available in next releases
 
 ## Documentation
 
@@ -81,7 +84,7 @@ Endpoints for viewing and manipulating the Accounts that the Authenticated User 
 
 ### Considerations
 
-Any delete method will remove content from the database. We are using booleans fields instead. User has a 'status' field and product has an 'available' field. By default both are set to true.
+Any delete method will NOT remove content from the database. We are using booleans fields instead. User has a 'status' field and product has an 'available' field. By default both are set to true.
 
 This site has 3 user roles: `client, seller, admin`. 
 

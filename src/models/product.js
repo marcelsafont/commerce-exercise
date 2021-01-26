@@ -4,12 +4,12 @@ const getAllProduct = (req, res) => {
     let start = req.query.start || 0;
     start = Number(start);
 
-    let end = req.query.end || 5;
-    end = Number(end);
+    let limit = req.query.limit || 5;
+    limit = Number(limit);
 
     Product.find({ available: true }, 'name price description')
         .skip(start)
-        .limit(end)
+        .limit(limit)
         .populate('seller', 'name')
         .exec((err, products) => {
             if (err) {
