@@ -1,2 +1,3 @@
-{"_id":{"$oid":"600c4dd47912dc545811e46e"},"role":"admin","status":true,"name":"marcel","email":"marcel@test.com","password":"$2b$10$umeHV3OSq9phSJKCH2s9zelxBErDdXea8uQugeTI2LW.jFT.pnD2W","__v":0}
-{"_id":{"$oid":"600d38221f30cb62c87d404e"},"role":"admin","status":true,"name":"marcel","email":"marcel2@test.com","password":"$2b$10$pmMxfoHgDO.KoNgeiaFNqe6PLDxzezDDqIxQhXJr9.JaQc639wmGC","__v":0}
+{"_id":{"$oid":"600ff0e6967fadb4732568d9"},"role":"client","status":true,"name":"client","email":"client@test.com","password":"$2b$10$SSyMkM5zc.j9TGMstyfNQ.VKp85HJu3GKdLOLZvs3G6uryocLmqg2","__v":0}
+{"_id":{"$oid":"600ff102967fadb4732568da"},"role":"admin","status":true,"name":"admin","email":"admin@test.com","password":"$2b$10$7/gT4Zg.MK2SXMa7KdymzubrXJ58q6szm2CIPbA4vC4khHDsOXDq.","__v":0}
+{"_id":{"$oid":"600ff119967fadb4732568db"},"role":"seller","status":true,"name":"seller","email":"seller@test.com","password":"$2b$10$W5g3zyfYxAJHShSZf3lSPuBkd4sYvjqi44xKDCaTpanlj0BLMIua2","__v":0}
