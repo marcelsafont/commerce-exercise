@@ -1,24 +1,62 @@
 # Commerce API REST
 
-## Instalación
+This is an API Rest service for a shop that sells online courses. 
 
-- configurar el fichero /config/config.js, según las necesidades del proyecto y el entorno. En config.js definiremos el puerto, la url de la BBDD, la expiracion del token y la clave seed para la generación de los tokens.
-- ```npm install```
-- ```npm run dev``` para desarollo (nodemon)
-- ```npm start``` para producción
+Before start, user must copy `config/config-example.js` and create a `config/config.js`. Is this file we are going to define port, database url, expiration time and secret seed for password encryption.   
 
-## Entorno de desarrollo
+## Manual local installation
 
-En la carpeta /data en la raiz del proyecto se han exportados datos de ejemplo para poder importarlos en entornos de desarrollo. 
+User must have mongo running in the machine. 
 
-## Documentación
+### Install
+    npm install
 
-Todos los endpoints estan documentados en /api-docs dentro de la aplicación
 
-## Consideraciones
+### Run app on dev mode
+    npm run dev
 
-Ningún metodo delete elimina físicamente el registro de la base de datos. Los productos tiene un campo booleano 'available' y los usuarios un campo 'status', donde se marca como true o false si esta activo o no. 
 
-El sitio contempla 3 roles para los usuarios: 'client', 'seller', 'admin'. 
+### Run app on production mode
+    npm start    
 
-Los usuarios por defecto son asignados como 'client' 
+### Setting up development enviroment
+
+`In order to use dummy content in the local enviroment, user must use 'secret' as seed in file config.js.`
+
+In the root folder of the project there is a folder called `data`. Inside that folder there are dummy content exports jsons that can be imported.
+
+    mongoimport --db=YOUR_DATABASE_NAME --collection=users --file=users.json
+
+## Docker installation  
+
+Will be available in next release
+
+## Documentation
+
+All endpoints are documented using swagger and they are located in `/api-docs`
+
+### Open Endpoints
+
+Open endpoints require no Authentication.
+* login: `POST /login`
+* products: `GET /products`
+
+
+### Endpoints that require Authentication
+
+
+Closed endpoints require a valid Token to be included in the header of the request. A Token can be acquired from the Login view above.
+
+
+### Current user related 
+
+
+Each endpoint manipulates or displays information related to the User whose Token is provided with the request
+
+### Considerations
+
+Any delete method will remove content from the database. We are using booleans fields instead. User has a 'status' field and product has an 'available' field. By default both are set to true.
+
+This site has 3 user roles: `client, seller, admin`. 
+
+Users by default are assigned to `client`. 
