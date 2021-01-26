@@ -2,7 +2,7 @@
 
 This is an API Rest service for a shop that sells online courses. 
 
-Before start, user must copy `config/config-example.js` and create a `config/config.js`. Is this file we are going to define port, database url, expiration time and secret seed for password encryption.   
+Before start, user must copy `config/config-example.js` and create a `config/config.js`. It is in the file we are going to define port, database url, expiration time for the token and secret seed for password encryption.   
 
 ## Manual local installation
 
@@ -88,4 +88,4 @@ Any delete method will NOT remove content from the database. We are using boolea
 
 This site has 3 user roles: `client, seller, admin`. 
 
-Users by default are assigned to `client`. In order to change role client must use update endpoint. 
+Users by default are assigned to `client`. If we want to change user role we need to user update user endpoint.  

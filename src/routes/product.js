@@ -33,7 +33,7 @@ ProductRouter.get('/products', getAllProduct)
 
 /**
  * @swagger
- * /products/search:
+ * /products/search?name=name&maxPrice=maxPrice&minPrice=minPrice:
  *   get:
  *     tags: [Products]
  *     description: Allow search on products
