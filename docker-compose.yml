@@ -8,8 +8,13 @@ services:
       - "3001:3000"
     links:
       - database
+    volumes:
+      - .:/app # named volume
+      - /app/node_modules # anonymous volume for node_modules only
   database:
     container_name: mongodatabase
     image: mongo
     ports: 
       - "27018:27017"
+    logging:
+      driver: none
