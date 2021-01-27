@@ -2,7 +2,11 @@
 
 This is an API Rest service for a shop that sells online courses. 
 
-Before start, user must copy `config/config-example.js` and create a `config/config.js`. It is in the file we are going to define port, database url, expiration time for the token and secret seed for password encryption.   
+Before start, user must copy `config/config-example.js` and create a `config/config.js`. It is in the file we are going to define port, database url, expiration time for the token and secret seed for password encryption. 
+
+## Requirements
+
+`node >= 12`
 
 ## Manual local installation
 
